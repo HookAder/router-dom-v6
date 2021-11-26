@@ -7,7 +7,7 @@ const Posts: React.FC = () => {
   const location = useLocation();
   return (
     <div>
-      <Header title={location.state.title} />
+      <Header title={location.state.title} showLeft={{ is: true, to: "/" }} />
       <Article title={location.state.title} text={location.state.text} />
     </div>
   );

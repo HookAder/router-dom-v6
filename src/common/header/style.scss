@@ -2,6 +2,17 @@
   width: 100%;
   height: 3rem;
   background-color: #4262b3;
+  .left-icons {
+    position: fixed;
+    left: 0.5rem;
+    top: .8rem;
+    width: 1.3rem;
+    height: 1.3rem;
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
   p {
     color: #fff;
     text-align: center;
