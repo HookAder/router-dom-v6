@@ -12,7 +12,11 @@ const Nav: React.FC = () => {
           <p>
             <FontAwesomeIcon icon={faHome} color="#fff" />
           </p>
-          <NavLink to="/">首页</NavLink>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active" : "")}>
+            首页
+          </NavLink>
         </li>
         <li>
           <p>
