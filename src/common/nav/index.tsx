@@ -1,35 +1,52 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome/index";
-import { faHome, faClone, faChild } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faClone,
+  faChild,
+  IconDefinition,
+} from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
+
+interface Icons {
+  icon: IconDefinition;
+  text: string;
+  to: string;
+}
+
+interface IconsProps {
+  icons: Icons;
+}
+
+//icons 数据管理
+const iconList: Icons[] = [
+  { icon: faHome, text: "首页", to: "/home" },
+  { icon: faClone, text: "关于", to: "/about" },
+  { icon: faChild, text: "我的", to: "/my" },
+];
+
+// icons子组件
+const IconsItem: React.FC<IconsProps> = ({ icons }) => (
+  <li>
+    <p>
+      <FontAwesomeIcon icon={icons.icon} color="#fff" />
+    </p>
+    <NavLink
+      to={icons.to}
+      style={({ isActive }) => (isActive ? { color: "yellow" } : {})}>
+      {icons.text}
+    </NavLink>
+  </li>
+);
 
 const Nav: React.FC = () => {
   return (
     <nav className="nav">
       <ul>
-        <li>
-          <p>
-            <FontAwesomeIcon icon={faHome} color="#fff" />
-          </p>
-          <NavLink
-            to="/"
-            className={({ isActive }) => (isActive ? "active" : "")}>
-            首页
-          </NavLink>
-        </li>
-        <li>
-          <p>
-            <FontAwesomeIcon icon={faClone} color="#fff" />
-          </p>
-          <Link to="/about">关于</Link>
-        </li>
-        <li>
-          <p>
-            <FontAwesomeIcon icon={faChild} color="#fff" />
-          </p>
-          <Link to="/my">我的</Link>
-        </li>
+        {iconList.map((item, index) => (
+          <IconsItem key={index} icons={item} />
+        ))}
       </ul>
     </nav>
   );
