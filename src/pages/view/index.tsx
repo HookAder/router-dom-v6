@@ -3,7 +3,7 @@ import NavBar from "../../common/nav";
 import Header from "../../common/header";
 import BarText from "./components/BarText";
 import { Carousel } from "react-responsive-carousel";
-
+ 
 const images = [
   {
     original: "https://picsum.photos/id/1018/1000/600/",
