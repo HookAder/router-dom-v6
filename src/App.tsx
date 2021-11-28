@@ -7,6 +7,7 @@ import Posts from "./pages/posts";
 import View from "./pages/view";
 import Login from "./pages/login";
 import NotPage from "./pages/404";
+import Learn from "./pages/learn";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const App: React.FC = () => {
@@ -22,8 +23,9 @@ const App: React.FC = () => {
     { path: "/about", element: <About /> },
     { path: "/my", element: <My /> },
     { path: "/login", element: <Login /> },
+    { path: "/learn", element: <Learn /> },
     // 重定向
-    { index: true, element: <Navigate to="/home" /> },
+    { index: true, element: <Navigate to="/learn" /> },
     // 404 page
     { path: "/*", element: <NotPage /> },
   ]);
