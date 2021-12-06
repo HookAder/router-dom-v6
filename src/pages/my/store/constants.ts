@@ -1,0 +1,1 @@
+export const EXIT_LOGIN = 'MY/EXIT_LOGIN';

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../api";
+import { connect } from "react-redux";
+import { actionCreators } from "./store";
 import "./style.scss";
 
 interface FormProps {
@@ -16,34 +17,14 @@ const FormTable: React.FC<FormProps> = ({ onChange, value, type }) => {
   );
 };
 
-const Login: React.FC = () => {
+const Login: React.FC = (props: any) => {
   const navigate = useNavigate();
-  const [username, setUser] = useState<string>("");
-  const [password, setPass] = useState<string>("");
 
-  const onChangeUser = (user: string) => {
-    setUser(user);
-  };
-  const onChangePass = (pass: string) => {
-    setPass(pass);
-  };
-  const onLogin = async (user: string, pass: string) => {
-    const {
-      data: { data },
-    } = await login({ username: user, password: pass });
-    if (user !== data.username && pass !== data.password) {
-      console.log({
-        msg: "账号或密码错误",
-        status: 0,
-      });
-      return;
+  useEffect(() => {
+    if (props.LoginStatus) {
+      navigate("/", { replace: true });
     }
-    console.log({
-      msg: "登录成功",
-      status: 200,
-    });
-    navigate("/", { replace: true });
-  };
+  }, [props.LoginStatus, navigate]);
   return (
     <div className="login-wrapper">
       <div className="top-header">
@@ -53,19 +34,19 @@ const Login: React.FC = () => {
       <div className="form-wrapper">
         <FormTable
           type="text"
-          value={username}
-          onChange={(e: any) => onChangeUser(e.target.value)}
+          value={props.user}
+          onChange={(e: any) => props.onChangeUser(e.target.value)}
         />
         <br />
         <FormTable
           type="password"
-          value={password}
-          onChange={(e: any) => onChangePass(e.target.value)}
+          value={props.pass}
+          onChange={(e: any) => props.onChangePass(e.target.value)}
         />
         <br />
         <button
           className="login-btn"
-          onClick={() => onLogin(username, password)}>
+          onClick={() => props.onLogin(props.user, props.pass)}>
           登陆
         </button>
       </div>
@@ -73,4 +54,22 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+const mapStateProps = (state: any) => ({
+  user: state.login.user,
+  pass: state.login.pass,
+  LoginStatus: state.login.LoginStatus,
+});
+
+const mapDispatchProps = (dispatch: any) => ({
+  onChangeUser(user: string) {
+    dispatch(actionCreators.change_user(user));
+  },
+  onChangePass(pass: string) {
+    dispatch(actionCreators.change_pass(pass));
+  },
+  onLogin(user: string, pass: string) {
+    dispatch(actionCreators.login(user, pass));
+  },
+});
+
+export default connect(mapStateProps, mapDispatchProps)(Login);
